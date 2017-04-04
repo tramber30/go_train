@@ -6,11 +6,16 @@ import (
         "math/rand"
 )
 
-func Div(a, b float64) float64 {
-        return a / b
+func Round(val float64, rank int) float64 {
+        temp := val * math.Pow10(rank)
+        if  float64(math.Trunc(temp + 0.5)) > float64(math.Trunc(temp)) {
+                return float64(math.Trunc(temp + 0.5)) / float64(math.Pow10(rank))
+        }
+        return float64(math.Trunc(temp)) / float64(math.Pow10(rank))
 }
 
-func Mysqrt(x, i int) float64 {
+
+func MySqrt(x, i int) float64 {
         z := 5.0
         for it := 0; it < i; it++ {
                 high := math.Pow(z, float64(2)) - float64(x)
@@ -22,7 +27,7 @@ func Mysqrt(x, i int) float64 {
         return z
 }
 
-func Selfsqrt(x int) (z float64, seed, it int) {
+func SelfSqrt(x int) (z float64, seed, it int) {
         seed = rand.Int()
         z = float64(seed)
         var res float64
@@ -36,14 +41,11 @@ func Selfsqrt(x int) (z float64, seed, it int) {
         return
 }
 
-
-
 func main() {
         i := 4076
         fmt.Println("square root of: ", i)
-       // fmt.Println("Approx:", Mysqrt(i, 5))
-       for y := 0; y < 10; y++ {
-               res, seed, it := Selfsqrt(i)
+        for y := 0; y < 3; y++ {
+               res, seed, it := SelfSqrt(i)
                fmt.Printf("resultat: %v, seed: %v, itération: %v\n", res, seed, it)
         }
         fmt.Println("Math:", math.Sqrt(float64(i)))
